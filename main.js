@@ -1,17 +1,20 @@
 let money = 30000,
     income = 'freelance',
-    addExpenses = 'credit, utulityBills, mobile, internet',
+    addExpenses = 'Credit, Utulity Bills, Mobile, Internet',
     deposit = false,
     mission = 120000,
     period = 12;
 
-console.log( typeof(money) );
-console.log( typeof(income) );
-console.log( typeof(deposit) );
+console.log( 'money have type of ' + '"' + typeof(money) + '"' );
+console.log( 'income have type of ' + '"' + typeof(income) +'"' );
+console.log( 'deposit have type of ' + '"' + typeof(deposit) + '"' );
 
-console.log(addExpenses.length);
+console.log(`Длина строки addExpenses равна: ${addExpenses.length}`);
 
 console.log(`Период равен ${period} месяцев`);
 console.log(`Цель заработать ${mission} рублей`);
 
-addExpenses.toLowerCase();
+console.log( addExpenses.toLowerCase().split(', ') );
+
+let budgetDay = 50;
+console.log(`дневной бюджет: ${budgetDay} рублей`);
