@@ -5,6 +5,13 @@ let money = 30000,
     mission = 120000,
     period = 12;
 
-alert('Hi there, press "OK" for close this window');
+console.log( typeof(money) );
+console.log( typeof(income) );
+console.log( typeof(deposit) );
 
-console.log('This string in console');
+console.log(addExpenses.length);
+
+console.log(`Период равен ${period} месяцев`);
+console.log(`Цель заработать ${mission} рублей`);
+
+addExpenses.toLowerCase();
