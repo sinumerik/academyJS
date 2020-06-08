@@ -10,3 +10,13 @@ if (lang === 'ru') {
 } else {
     alert(weekEN);
 }
+
+switch (lang) {
+    case ('ru'):
+        alert(weekRU);
+        break;
+    case ('en'):
+        alert(weekEN);
+        break;
+}
+    
