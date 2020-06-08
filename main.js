@@ -3,15 +3,16 @@
 let money = prompt('Ваш месячный доход?', ''),
     income = 'freelance',
     addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', ''),
-    deposit = confirm('Есть ли у вас депозит в банке?'),
+    deposit = confirm('Есть ли у вас депозит в банке?'), // true/false
     mission = 120000,
     period = 12,
     expenses1 = prompt('Введите обязательную статью расходов?', ''),
-    amount1 = prompt('Во сколько это обойдется?', ''),
+    amount1 = prompt('Во сколько это обойдется?', ''), // обязательные расходы №1
     expenses2 = prompt('Введите обязательную статью расходов?', ''),
-    amount2 = prompt('Во сколько это обойдется?', '');
+    amount2 = prompt('Во сколько это обойдется?', ''); // обязательные расходы №2
 
-let budgetMonth = Number(money) - Number(amount1) - Number(amount2);
+// месячный бюджет с учетом обязательных расходов
+let budgetMonth = +money - +amount1 - +amount2;
 
 console.log( 'money have type of ' + '"' + typeof(money) + '"' );
 console.log( 'income have type of ' + '"' + typeof(income) +'"' );
