@@ -24,6 +24,13 @@ switch (lang) {
 
 const multiArray = [weekRU, weekEN];
 
+const language = {
+    ru: 0,
+    en: 1
+};
+
+alert( multiArray[language[lang]] );
+
 let namePerson = prompt('Введите имя');
 
 let status = (namePerson === 'Артем') ? 'Директор' : ( (namePerson === 'Максим') ? 'Преподователь' : 'Ученик' );
