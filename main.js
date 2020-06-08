@@ -3,7 +3,7 @@
 const weekEN = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       weekRU = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
 
-let lang = 'ru'; // ru/en
+let lang = prompt('Введите язык вывода дней недели(возмодные значения "ru" или "en")'); // ru/en
 
 if (lang === 'ru') {
     alert(weekRU);
@@ -18,5 +18,15 @@ switch (lang) {
     case ('en'):
         alert(weekEN);
         break;
+    default: 
+        break;
 }
+
+const multiArray = [weekRU, weekEN];
+
+let namePerson = prompt('Введите имя');
+
+let status = (namePerson === 'Артем') ? 'Директор' : ( (namePerson === 'Максим') ? 'Преподователь' : 'Ученик' );
+
+console.log(status);
     
