@@ -2,11 +2,10 @@
 
 let changeString = (data) => {
     if ( typeof(data) === 'string' ) {
-        if (data.length <= 30) {
-            return data.trim();
-        } else {
-            return (data.trim().substring(0, 31) + '...');
-        }
+        
+        let temp = (data.length <= 30) ? data.trim() : data.trim().substring(0, 31) + '...';
+       
+        return temp;
     } else {
         return ('Передана не строка!');
     }
