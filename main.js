@@ -12,24 +12,24 @@ let money = prompt('Ваш месячный доход?', ''),
     amount2 = prompt('Во сколько это обойдется?', ''); // обязательные расходы №2
 
 // сумма расходов за месяц
-let getExpensesMonth = function(cost1, cost2) {
+let getExpensesMonth = (cost1, cost2) => {
     return ( (+cost1) + (+cost2) );
 };
 
 // месячный бюджет с учетом обязательных расходов
-let getAccumulatedMonth = function(budget) {
+let getAccumulatedMonth = budget => {
     return ( +budget - getExpensesMonth(amount1, amount2));
 };
 
 let accumulatedMonth = getAccumulatedMonth(money);
 
 // период(в месяцах) накопления цели
-let getTargetMonth = function(target) {
+let getTargetMonth = target => {
     return ( Math.ceil(target / accumulatedMonth) );
 };
 
 // типы данных
-let getTypeOf = function(data) {
+let getTypeOf = data => {
     return ( console.log(typeof(data)) );
 };
 
@@ -48,7 +48,7 @@ console.log(`Цель будет достигнута за: ${getTargetMonth(mis
 let budgetDay = Math.floor(accumulatedMonth / 30);
 console.log(`дневной бюджет: ${budgetDay} рублей`);
 
-let getStatusIncome = function(budget) {
+let getStatusIncome = (budget) => {
     if (budget > 1200) {
         return ('У вас высокий уровень дохода!');
     } else if ( (budget <= 1200) && (budget > 600) ) {
