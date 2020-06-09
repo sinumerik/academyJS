@@ -41,8 +41,6 @@ console.log(`Месячные расходы равны: ${getExpensesMonth(amou
 
 console.log(`Возможные расходы в месяц: ${addExpenses.split(',')}`);
 
-// console.log(`Бюджет на месяц: ${accumulatedMonth}`);
-
 console.log(`Цель будет достигнута за: ${getTargetMonth(mission)} месяцев`);
 
 let budgetDay = Math.floor(accumulatedMonth / 30);
