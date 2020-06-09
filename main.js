@@ -29,13 +29,13 @@ let getTargetMonth = target => {
 };
 
 // типы данных
-let getTypeOf = data => {
+let showTypeOf = data => {
     return ( console.log(typeof(data)) );
 };
 
-getTypeOf(money);
-getTypeOf(income);
-getTypeOf(deposit);
+showTypeOf(money);
+showTypeOf(income);
+showTypeOf(deposit);
 
 console.log(`Месячные расходы равны: ${getExpensesMonth(amount1, amount2)} рублей`);
 
