@@ -15,5 +15,5 @@ for(let i = 2; i <= 100; i++) {
             continue nextPrime;
         }
     }
-    console.log(i);
+    console.log(i + 'делитель числа ' + i + ': 1 и ' + i);
 }
