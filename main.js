@@ -33,7 +33,7 @@ let getExpensesMonth = () => {
         // временная переменная, для проверки на число
         let temp = prompt('Во сколько это обойдется?', '');
 
-        while ( isNumber(temp) ) {
+        while( isNumber(temp) ) {
             temp = prompt('Во сколько это обойдется?', '');
         }
 
