@@ -27,6 +27,8 @@ let appData = {
     // возможные расходы
     addExpenses: [],
     deposit: false, // депозит в банке
+    percentDeposit: 0, // процент по депозиту
+    moneyDeposit: 0, //сумма депозита
     mission: 60000, // цель, сумма, которую хотим собрать 
     period: 12, // рассчетный период сбора цели
     budget: money,  // месячный заработок
@@ -36,21 +38,38 @@ let appData = {
 
     // спрашиваем пользователя о возможных расходах и наличии депозита
     asking: function() {
+
+        if (confirm('Есть ли у Вас дополнительный заработок?')) {
+            let itemIncome = '',
+                cashIncome = 0;
+
+            do {
+                itemIncome = prompt('Какой у Вас дополнительный заработок?', '');
+            } while (itemIncome === '' || itemIncome === null || +itemIncome === 0);
+
+            do {
+                cashIncome = +prompt('Сколько на этом зарабатываете?', '');
+            } while( isNumber(cashIncome) );
+
+            appData.income[itemIncome] = cashIncome;
+        }
+
+
         appData.addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', '');
         appData.addExpenses = appData.addExpenses.toLowerCase().split(',');
         appData.deposit = confirm('Есть ли у вас депозит в банке?'); // true/false
 
         for(let i = 0; i < 2; i++) {
 
-            // переменная для хранения ответа пользователя
-            let ask = prompt('Введите обязательную статью расходов?', '');
+            let ask = '', // переменная для хранения ответа пользователя
+                temp = 0; // временная переменная, для проверки на число
+            do {
+                ask = prompt('Введите обязательную статью расходов?', '');
+            } while (ask === '' || ask === null || +ask === 0);
 
-            // временная переменная, для проверки на число
-            let temp = +prompt('Во сколько это обойдется?', '');
-
-            while( isNumber(temp) ) {
+            do {
                 temp = +prompt('Во сколько это обойдется?', '');
-            }
+            } while( isNumber(temp) );
 
             // создаем "ключ: значение" из ответов пользователя
             appData.expenses[ask] = temp;
@@ -96,6 +115,19 @@ let appData = {
         } else {
             return ('Что то пошло не так');
         }
+    },
+    // получение информации о депозите
+    getInfoDeposit: function() {
+        do {
+            appData.percentDeposit = +prompt('Под какой процент положен депозит?', '');
+        } while ( isNumber(appData.percentDeposit) );
+        
+        do {
+            appData.moneyDeposit = +prompt('Какая сумма депозита?', '');
+        } while( isNumber(appData.moneyDeposit) );
+    },
+    calcSavedMoney: function() {
+        return appData.budgetMonth * appData.period;
     }
 };
 
@@ -109,9 +141,13 @@ appData.showTargetMonth();
 
 console.log(appData.getStatusIncome());
 
-console.log('Наша программа включает в себя данные: ');
-for (let key in appData) {
-    console.log(`ключ:${key} is ${appData[key]}`);
-}
+appData.getInfoDeposit();
+
+console.log(appData.addExpenses.join(', '));
+
+// console.log('Наша программа включает в себя данные: ');
+// for (let key in appData) {
+//     console.log(`ключ:${key} is ${appData[key]}`);
+// }
 
  
