@@ -143,7 +143,17 @@ console.log(appData.getStatusIncome());
 
 appData.getInfoDeposit();
 
-console.log(appData.addExpenses.join(', '));
+function toUpperCaseFirstLetter(array) {
+    let tempArr = [];
+
+    array.forEach(function(item, i) {
+        tempArr[i] = item[0].toUpperCase() + item.slice(1);
+    });
+
+    return tempArr;
+}
+
+console.log(toUpperCaseFirstLetter(appData.addExpenses).join(', '));
 
 // console.log('Наша программа включает в себя данные: ');
 // for (let key in appData) {
