@@ -1,56 +1,89 @@
 'use strict';
 
-const week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']; 
+const week = [
+    'Понедельник', 
+    'Вторник', 
+    'Среда', 
+    'Четверг', 
+    'Пятница', 
+    'Суббота', 
+    'Воскресенье'
+];
+const months = [
+    'Январь', 
+    'Февраль', 
+    'Март', 
+    'Апрель', 
+    'Май', 
+    'Июнь', 
+    'Июль', 
+    'Август', 
+    'Сентябрь', 
+    'Октябрь', 
+    'Ноябрь', 
+    'Декабрь'
+];
+const opt1 = document.getElementsByClassName('option')[0];
+const opt2 = document.getElementsByClassName('option')[1];
 
-const block = document.getElementById('block');
+const option = [opt1, opt2];
+const hoursName = 'час'; // значение по умолчанию для часов
 
-const date = new Date();
+function changeMonthsName(arr) {
+    let tempArray = [];
+    let tempMonth = '';
 
-week.forEach(function(item, i, arr) {
-    let day = document.createElement('span');
+    arr.forEach(function(item, i) {
+        if (i === 2 || i === 7) {
+            tempMonth = item.slice(0, item.length) + 'а';
+        } else {
+            tempMonth = item.slice(0, item.length - 1) + 'я';
+        }
 
-    day.innerText = item;
+        tempArray[i] = tempMonth;
+    });
 
-    if (i === arr.length - 1 || i === arr.length - 2) {
-        day.classList.add('weekend');
+    return tempArray;
+}
+
+function changeHoursName(hour) {
+    let tempHours = '';
+    if ( (hour > 1 && hour < 5) || (hour > 21 && hour <= 24) ) {
+        tempHours = hoursName + 'а';
+    } else if (hour >= 5 && hour < 21) {
+        tempHours = hoursName + 'ов';
+    } else {
+        tempHours = hoursName;
     }
+    return tempHours;
+}
 
-    if (date.getDay() - 1 === i) {
-        day.classList.add('current');
+function changeView(data) {
+    if (data >= 0 && data < 10) {
+        return ('0' + String(data) );
+    } else {
+        return data;
     }
+}
 
-    block.append(day);
-});
+let runTime = function() {
+    let date = new Date();
 
+    let year = date.getFullYear(),
+      month = changeMonthsName(months)[date.getMonth()],
+      dayOfWeek = week[date.getDay() - 1],
+      day = date.getDate(),
+      hours = date.getHours(),
+      minutes = date.getMinutes(),
+      seconds = new Date().getSeconds();
 
+    let options = [
+        `Cегодня ${dayOfWeek}, ${day} ${month} ${year} года, ${hours} ${changeHoursName(hours)} ${minutes} минут ${seconds} секунд`,
+        `${changeView(day)}.${changeView(date.getMonth())}.${changeView(year)} - ${changeView(hours)}:${changeView(minutes)}:${changeView(seconds)}`
+    ];
+    option.forEach(function(item, i) {
+        item.innerText = options[i];
+    });
+};
 
-
-
-
-
-
-
-
-// let date = new Date();
-
-// function getDayOfWeek() {
-//     return date.getDay();
-// }
-
-// week.forEach(function(item, index, arr) {
-//     if ( (index === arr.length - 1) || (index === arr.length - 2) ) {
-//         if (index === getDayOfWeek()) {
-//             console.log('%c' + item, 'color: red; font-style: italic');
-//         } else {
-//             console.log('%c' + item, 'color: red');
-//         }
-//     } else {
-//         if (index === getDayOfWeek()) {
-//             console.log('%c' + item, 'font-style: italic');
-//         } else {
-//             console.log(item);
-//         }
-        
-//     }
-// });
-
+setInterval(runTime, 1000);
