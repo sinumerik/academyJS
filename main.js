@@ -11,15 +11,21 @@ let // кнопка запуска программы
     // возможные доходы
     additionalIncomeItems = document.querySelectorAll('.additional_income-item'),
     // поля с выводом значений
-    values = document.querySelectorAll('[class$="-value"]'),
+    budgetMonthValue = document.querySelector('.budget_month-value'),
+    budgetDayValue = document.querySelector('.budget_day-value'),
+    expensesMonthValue = document.querySelector('.expenses_month-value'),
+    additionalIncomeValue = document.querySelector('.additional_income-value'),
+    additionalExpensesValue = document.querySelector('.additional_expenses-value'),
+    incomePeriodValue = document.querySelector('.invome_period-value'),
+    targetMonthValue = document.querySelector('.target_month-value'),
     // месячный доход
     salaryAmount = document.querySelector('.salary-amount'),
     // название дополнительного дохода
-    incomeTitle = document.querySelector('.income-title'),
+    incomeTitle = document.querySelector('input.income-title'),
     // значение дополнительного дохода
     incomeAmount = document.querySelector('.income-amount'),
     // название обязательных расходов
-    expensesTitle = document.querySelector('.expenses-title'),
+    expensesTitle = document.querySelector('input.expenses-title'),
     // значение обязательных расходов
     expensesAmount = document.querySelector('.expenses-amount'),
     // возможные расходы
@@ -28,3 +34,5 @@ let // кнопка запуска программы
     targetAmount = document.querySelector('.target-amount'),
     // период рассчета
     periodSelect = document.querySelector('.period-select');
+
+    console.log(expensesTitle);
