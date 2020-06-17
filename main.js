@@ -57,7 +57,7 @@ chaptersBook5[8].after(chaptersBook5[6]);
 // ---------------------------------------------------------------------------------
 
 // работаем с шестой книгой
-let chaptersBook6 = collectionBooks[2].lastElementChild.children;
+let chaptersBook6 = collectionBooks[2].lastElementChild.children; // получаем коллекцию элементов списка
 
 //клонируем список главы(можно любой, главное глубокое клонирование)
 let chapter8 = chaptersBook6[8].cloneNode(true);
