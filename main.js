@@ -24,26 +24,42 @@ let // кнопка запуска программы
     incomeTitle = document.querySelector('input.income-title'),
     // значение дополнительного дохода
     incomeAmount = document.querySelector('.income-amount'),
-    // название обязательных расходов
-    expensesTitle = document.querySelector('input.expenses-title'),
-    // значение обязательных расходов
-    expensesAmount = document.querySelector('.expenses-amount'),
     // возможные расходы
     additionalExpensesItem = document.querySelector('.additional_expenses-item'),
     // цель 
     targetAmount = document.querySelector('.target-amount'),
     // период рассчета
-    periodSelect = document.querySelector('.period-select');
+    periodSelect = document.querySelector('.period-select'),
+    expensesItems = document.querySelectorAll('.expenses-items');
+
+    function addError(item) {
+        item.classList.add('error');
+        // start.setAttribute('disabled', 'disabled');
+    }
+
+    function removeError(item) {
+        item.classList.remove('error');
+        // start.removeAttribute('disabled');
+    }
 
     // для проверки на число
-    let isNumber = function(value, varuable) {
+    let isNumber = function(value, item) {
         if( value.trim() === '' || isNaN(value) === true ) {
-            addError(varuable);
-            console.log(typeof value + ' ' + value);
+            addError(item);
             return false;
         } else {
-            removeError(varuable);
-            console.log(typeof value + ' ' + value);
+            removeError(item);
+            return true;
+        }
+    };
+
+    // проверка на пустую строку
+    let isString = function(string, item) {
+        if (string.trim() === '') {
+            addError(item);
+            return false;
+        } else {
+            removeError(item);
             return true;
         }
     };
@@ -70,12 +86,42 @@ let appData = {
 
         if( isNumber(salaryAmount.value, salaryAmount) ) {
             appData.budget = +salaryAmount.value;
-            console.log(appData.budget);
         }    
+
+        appData.getExpenses();
 
         // appData.asking();
         // appData.getExpensesMonth();
         // appData.getBudget();
+    },
+    // добавляем поля с обязательными расходами
+    addExpensesBlock: function() {
+        let clone = expensesItems[0].cloneNode(true);
+
+        addExpenses.before(clone);
+
+        expensesItems = document.querySelectorAll('.expenses-items');
+
+        if (expensesItems.length === 3) {
+            addExpenses.style.display = 'none';
+        }
+    },
+    getExpenses: function() {
+        expensesItems.forEach(function(item) {
+            // название обязательных расходов
+            let expensesTitle = item.querySelector('input.expenses-title');
+            // значение обязательных расходов
+            let expensesAmount = item.querySelector('.expenses-amount');
+
+            if ( isString(expensesTitle.value, expensesTitle) ) {
+                if ( isNumber(expensesAmount.value, expensesAmount) ) {
+                    appData.expenses[expensesTitle.value] = +expensesAmount.value;
+                }            
+            }
+            
+        });
+
+        
     },
     // спрашиваем пользователя о возможных расходах и наличии депозита
     asking: function() {
@@ -175,26 +221,20 @@ let appData = {
 // старт программы
 start.addEventListener('click', appData.start);
 
+addExpenses.addEventListener('click', appData.addExpensesBlock);
+
 // appData.showTargetMonth();
 
 // appData.getInfoDeposit();
 
-function addError(item) {
-    item.classList.add('error');
-    start.setAttribute('disabled', 'disabled');
-}
 
-function removeError(item) {
-    item.classList.remove('error');
-    start.removeAttribute('disabled');
-}
 
-function toUpperCaseFirstLetter(array) {
-    let tempArr = [];
+// function toUpperCaseFirstLetter(array) {
+//     let tempArr = [];
 
-    array.forEach(function(item, i) {
-        tempArr[i] = item[0].toUpperCase() + item.slice(1);
-    });
+//     array.forEach(function(item, i) {
+//         tempArr[i] = item[0].toUpperCase() + item.slice(1);
+//     });
 
-    return tempArr;
-}
+//     return tempArr;
+// }
