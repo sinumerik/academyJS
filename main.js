@@ -55,6 +55,18 @@ let // кнопка запуска программы
         }
     };
 
+    let regexp = /\d/ig;
+
+    let isNum = function(input) {
+
+        if (regexp.test(input.value)) {
+            console.log('num');
+            input.value.replace(regexp, '');
+        } else {
+            console.log('alpha');
+        }
+    };
+
 let appData = {
     // дополнительные доходы
     income: {},
@@ -85,6 +97,11 @@ let appData = {
     },
     addIncomeBlock: function() {
         let clone = incomeItems[0].cloneNode(true);
+        let cloneNodes = clone.childNodes;
+
+        cloneNodes.forEach(function(item) {
+            item.value = '';
+        })
 
         addIncome.before(clone);
 
@@ -97,6 +114,11 @@ let appData = {
     // добавляем поля с обязательными расходами
     addExpensesBlock: function() {
         let clone = expensesItems[0].cloneNode(true);
+        let cloneNodes = clone.childNodes;
+
+        cloneNodes.forEach(function(item) {
+            item.value = '';
+        })
 
         addExpenses.before(clone);
 
@@ -227,6 +249,9 @@ start.addEventListener('click', function() {
 });
 
 salaryAmount.addEventListener('input', function() {
+
+    isNum(salaryAmount);
+
     if( isNumber(salaryAmount.value, salaryAmount) ) {
         // старт программы
         start.removeAttribute('disabled');
@@ -238,3 +263,4 @@ salaryAmount.addEventListener('input', function() {
 addExpenses.addEventListener('click', appData.addExpensesBlock);
 
 addIncome.addEventListener('click', appData.addIncomeBlock);
+
