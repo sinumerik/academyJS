@@ -10,6 +10,8 @@ let // кнопка запуска программы
     depositCheck = document.querySelector('#deposit-check'),
     // возможные доходы
     additionalIncomeItems = document.querySelectorAll('.additional_income-item'),
+    additionalIncomeItem1 = additionalIncomeItems[0],
+    additionalIncomeItem2 = additionalIncomeItems[1],
     // поля с выводом значений
     budgetMonthValue = document.querySelector('.budget_month-value'),
     budgetDayValue = document.querySelector('.budget_day-value'),
@@ -26,6 +28,8 @@ let // кнопка запуска программы
     incomeAmount = document.querySelector('.income-amount'),
     // возможные расходы
     additionalExpensesItem = document.querySelector('.additional_expenses-item'),
+    expenceTitle = document.querySelector('input.expenses-title'),
+    expenseAmount = document.querySelector('.expenses-amount'),
     // цель 
     targetAmount = document.querySelector('.target-amount'),
     // период рассчета
@@ -55,15 +59,20 @@ let // кнопка запуска программы
         }
     };
 
-    let regexp = /\d/ig;
+    let isNum = function(item) {
+        let regexp = /^[0-9]*$/g;
 
-    let isNum = function(input) {
-
-        if (regexp.test(input.value)) {
+        if (!regexp.test(item.value)) {
             console.log('num');
-            input.value.replace(regexp, '');
-        } else {
-            console.log('alpha');
+            item.value = item.value.substring(0, item.value.length - 1);
+        }
+    };
+
+    let isStr = function(item) {
+        let reg = /^[а-яё | |.|,]*$/ig;
+
+        if(!reg.test(item.value)) {
+            item.value = item.value.substring(0, item.value.length - 1);
         }
     };
 
@@ -101,7 +110,7 @@ let appData = {
 
         cloneNodes.forEach(function(item) {
             item.value = '';
-        })
+        });
 
         addIncome.before(clone);
 
@@ -118,7 +127,7 @@ let appData = {
 
         cloneNodes.forEach(function(item) {
             item.value = '';
-        })
+        });
 
         addExpenses.before(clone);
 
@@ -195,6 +204,7 @@ let appData = {
         appData.addIncome.splice(0, appData.addIncome.length);
 
         additionalIncomeItems.forEach(function(item) {
+            
             let itemValue = item.value;
             
             if (itemValue.trim() !== '') {
@@ -258,9 +268,37 @@ salaryAmount.addEventListener('input', function() {
     } else {
         start.setAttribute('disabled', 'disabled');
     }
-})
+});
 
 addExpenses.addEventListener('click', appData.addExpensesBlock);
 
 addIncome.addEventListener('click', appData.addIncomeBlock);
+
+incomeTitle.addEventListener('input', function() {
+    isStr(incomeTitle);
+});
+
+additionalIncomeItem1.addEventListener('input', function() {
+    isStr(additionalIncomeItem1);
+});
+
+additionalIncomeItem2.addEventListener('input', function() {
+    isStr(additionalIncomeItem2);
+});
+
+expenceTitle.addEventListener('input', function() {
+    isStr(expenceTitle);
+});
+
+incomeAmount.addEventListener('input', function() {
+    isNum(incomeAmount);
+});
+
+expenseAmount.addEventListener('input', function() {
+    isNum(expenseAmount);
+});
+
+targetAmount.addEventListener('input', function() {
+    isNum(targetAmount);
+});
 
