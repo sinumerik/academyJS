@@ -7,9 +7,14 @@ const toDoControl = document.querySelector('.todo-control'),
 
 let toDoData = [];
 
+if (!localStorage.getItem('data')) {
+    localStorage.setItem("data", JSON.stringify(toDoData));  
+}
+
 function render() {
 
     toDoData = JSON.parse(localStorage.data);
+    console.log(typeof toDoData);
     
     toDoList.textContent = '';
     toDoCompleted.textContent = '';
