@@ -7,13 +7,8 @@ const toDoControl = document.querySelector('.todo-control'),
 
 let toDoData = [];
 
-// localStorage.data = JSON.stringify(toDoData);
-// toDoData = JSON.parse(localStorage.data);
-// console.log(JSON.parse(localStorage.data))
-
 function render() {
 
-    // localStorage.data = JSON.stringify(toDoData);
     toDoData = JSON.parse(localStorage.data);
     
     toDoList.textContent = '';
@@ -41,7 +36,6 @@ function render() {
             item.completed = !item.completed;
 
             localStorage.data = JSON.stringify(toDoData);
-            toDoData = JSON.parse(localStorage.data);
 
             render();
         });
@@ -52,21 +46,18 @@ function render() {
             toDoData.splice(i, 1);
 
             localStorage.data = JSON.stringify(toDoData);
-            toDoData = JSON.parse(localStorage.data);
 
             render();
         });
     });
-
-    localStorage.data = JSON.stringify(toDoData);
-};
+}
 
 toDoControl.addEventListener('submit', function(event) {
     event.preventDefault();
 
     let newToDo = {
         completed: false
-    }
+    };
 
     if (headerInput.value.trim() !== '') {
         newToDo.value =  headerInput.value;
@@ -77,7 +68,6 @@ toDoControl.addEventListener('submit', function(event) {
     }
 
     localStorage.data = JSON.stringify(toDoData);
-    toDoData = JSON.parse(localStorage.data);
 
     render();
 });
