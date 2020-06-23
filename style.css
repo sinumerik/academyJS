@@ -1,0 +1,32 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    visibility: 100vw;
+    height: 100vh;
+}
+
+.color-value {
+    padding: 15px;
+    font-size: 20px;
+    font-weight: 500;
+    background: #fff;
+    border-radius: 8px;
+    color: #000000;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+    border: 1px solid #000;
+    outline: none;
+    width: 200px;
+    text-align: center;
+}
+
+.color-picker {
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: 500;
+}
