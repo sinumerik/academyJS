@@ -96,7 +96,6 @@ let appData = {
     expensesMonth: 0,
 
     start: function() {   
-        console.log(this);
 
         this.budget = +salaryAmount.value;
 
@@ -119,11 +118,6 @@ let appData = {
 
 
         cloneNodes.forEach(function(item) {
-            if (cloneNodes.classList.contain === 'income-title') {
-                isStr(item);
-            } else {
-                isNum(item);
-            }
             item.value = '';
         });
 
