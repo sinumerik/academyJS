@@ -96,27 +96,34 @@ let appData = {
     expensesMonth: 0,
 
     start: function() {   
-        
-        appData.budget = +salaryAmount.value;
+        console.log(this);
 
-        appData.getBudget();
-        
-        appData.getExpenses();  
+        this.budget = +salaryAmount.value;
 
-        appData.getIncome();
-        appData.getExpensesMonth();
+        this.getBudget();
         
-        
-        appData.getAddExpenses();
-        appData.getAddIncome();
+        this.getExpenses();  
 
-        appData.showResult();
+        this.getIncome();
+        this.getExpensesMonth();
+        
+        
+        this.getAddExpenses();
+        this.getAddIncome();
+
+        this.showResult();
     },
     addIncomeBlock: function() {
         let clone = incomeItems[0].cloneNode(true);
-        let cloneNodes = clone.childNodes;
+        let cloneNodes = clone.querySelectorAll('input');
+
 
         cloneNodes.forEach(function(item) {
+            if (cloneNodes.classList.contain === 'income-title') {
+                isStr(item);
+            } else {
+                isNum(item);
+            }
             item.value = '';
         });
 
@@ -128,10 +135,21 @@ let appData = {
             addIncome.style.display = 'none';
         }
     },
+    deleteIncomeBlock: function() {
+        if (incomeItems.length > 1) {
+            incomeItems.forEach(function(item, i) {
+                if (i > 0) {
+                    item.remove();
+                }
+            });
+
+            addIncome.style.display = 'block';
+        }
+    },
     // добавляем поля с обязательными расходами
     addExpensesBlock: function() {
         let clone = expensesItems[0].cloneNode(true);
-        let cloneNodes = clone.childNodes;
+        let cloneNodes = clone.querySelectorAll('input');
 
         cloneNodes.forEach(function(item) {
             item.value = '';
@@ -143,6 +161,17 @@ let appData = {
 
         if (expensesItems.length === 3) {
             addExpenses.style.display = 'none';
+        }
+    },
+    deleteExpensesBlock: function() {
+        if (expensesItems.length > 1) {
+            expensesItems.forEach(function(item, i) {
+                if (i > 0) {
+                    item.remove();
+                }
+            });
+
+            addExpenses.style.display = 'block';
         }
     },
     // заполняем оъект expenses
@@ -249,6 +278,8 @@ let appData = {
     }
 };
 
+localStorage.setItem('data', JSON.stringify(appData));
+
 if ( salaryAmount.value !== '' ) {
     // старт программы
     start.removeAttribute('disabled');
@@ -257,23 +288,25 @@ if ( salaryAmount.value !== '' ) {
 }
 
 periodSelect.addEventListener('input', function() {
-    periodAmount.textContent = this.value;
+    periodAmount.textContent = periodSelect.value;
     incomePeriodValue.value = appData.calcSavedMoney();
 });
-
-
-start.addEventListener('click', appData.start); 
         
-start.addEventListener('click', function() {        
+start.addEventListener('click', function() {    
 
-        this.style.display = 'none';
-        cancel.style.display = 'block';
+    appData.start();
 
-        let dataCollection = data.querySelectorAll('input');
+    this.style.display = 'none';
+    cancel.style.display = 'block';
 
-        dataCollection.forEach(function(item) {
-            item.setAttribute('disabled', 'disabled');
-        });
+    let dataCollection = data.querySelectorAll('input');
+
+    dataCollection.forEach(function(item) {
+        item.setAttribute('disabled', 'disabled');
+    });
+
+    addIncome.setAttribute('disabled', 'disabled');
+    addExpenses.setAttribute('disabled', 'disabled');
 
 });
 
@@ -295,10 +328,19 @@ cancel.addEventListener('click', function() {
         item.value = '';
     });
 
+    addIncome.removeAttribute('disabled');
+    addExpenses.removeAttribute('disabled');
+
+    appData.start();
+
+    appData.deleteIncomeBlock();
+    appData.deleteExpensesBlock();
+
     this.style.display = 'none';
     start.style.display = 'block';
 
     start.setAttribute('disabled', 'disabled');
+
 });
 
 salaryAmount.addEventListener('input', function() {
