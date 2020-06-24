@@ -1,57 +1,79 @@
 'use strict';
 
-let body = document.querySelector('body'),
-    button = document.querySelector('.button');
+document.addEventListener('DOMContentLoaded', function() {
+    let body = document.querySelector('body');
 
-let DomElement = function(selector, height, width, bg, fontSize) {
-    this.selector = selector; 
-    this.height = height;
-    this.width = width;
-    this.bg = bg; 
-    this.fontSize = fontSize; 
-};
+    body.style.cssText = `width: 100vw;
+        height: 100vh;
+        margin: 0;`;
 
-DomElement.prototype.createElem = function() {
-    let div = document.createElement('div');
-    let span = document.createElement('span');
+    let DomElement = function(width, height, bg) { 
+        this.height = height;
+        this.width = width;
+        this.bg = bg; 
+    };
 
-    span.textContent = `Вы создали блок ${this.selector}`;
+    DomElement.prototype.createElem = function() {
+        let div = document.createElement('div');
 
-    if (this.selector[0] === '.') {
-        div.classList.add(this.selector.slice(1));
-    } 
-    if (this.selector[0] === '#') {
-        div.setAttribute('id', this.selector.slice(1));
-    }
+        div.style.cssText = `height: ${this.height}px;
+            width: ${this.width}px;
+            background: ${this.bg};
+            position: absolute;
+            top: 0;
+            left: 0;`;
+        
+        body.append(div);
+    };
 
-    div.style.cssText = `height: ${this.height}px;
-        width: ${this.width}px;
-        background: ${this.bg};
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-        color: #fff;`;
-
-    span.style.cssText = `font-size: ${this.fontSize}px;
-        text-align: center;`;
-
-    div.append(span);
-    
-    body.append(div);
-};
-
-button.addEventListener('click', function() {
-
-    let type = document.getElementById('type').value,
-        width = document.getElementById('width').value,
-        height = document.getElementById('height').value,
-        bg = document.getElementById('bg').value,
-        fontSize = document.getElementById('fontSize').value;
-
-    let obj = new DomElement(type, width, height, bg, fontSize);
+    let obj = new DomElement('100', '100', '#30f093');
     obj.createElem();
+
+    document.addEventListener('keydown', function(event) {
+        let div = document.querySelector('div');
+
+        let computed = getComputedStyle(div);
+
+        if (event.code === 'ArrowUp') {
+
+            let temp = computed.top;
+            temp = +temp.substr(0, temp.length - 2);
+
+            temp -= 10;
+
+        div.style.top = temp + 'px';
+        }
+        if (event.code === 'ArrowRight') {
+
+            let temp = computed.left;
+            temp = +temp.substr(0, temp.length - 2);
+
+            temp += 10;
+
+        div.style.left = temp + 'px';
+        }
+        if (event.code === 'ArrowDown') {
+
+            let temp = computed.top;
+            temp = +temp.substr(0, temp.length - 2);
+
+            temp += 10;
+
+        div.style.top = temp + 'px';
+        }
+        if (event.code === 'ArrowLeft') {
+
+            let temp = computed.left;
+            temp = +temp.substr(0, temp.length - 2);
+
+            temp -= 10;
+
+        div.style.left = temp + 'px';
+        }
+        
+    });
 });
+
 
 
 
