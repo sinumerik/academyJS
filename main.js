@@ -331,7 +331,7 @@ AppData.prototype.eventListeners = function() {
         addIncome.removeAttribute('disabled');
         addExpenses.removeAttribute('disabled');
     
-        // _this.start();
+        _this.start();
     
         _this.deleteIncomeBlock();
         _this.deleteExpensesBlock();
