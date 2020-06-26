@@ -229,7 +229,7 @@ class AppData {
         incomePeriodValue.value = this.calcSavedMoney();
     
         periodSelect.addEventListener('input', () => {
-            periodAmount.textContent = this.value;
+            periodAmount.textContent = periodSelect.value;
             incomePeriodValue.value = this.calcSavedMoney();
         });
     }
@@ -322,6 +322,8 @@ class AppData {
         
             periodSelect.value = 1;
             periodAmount.textContent = 1;
+
+            depositCheck.checked = false;
         
             let resultCollection = result.querySelectorAll('input');
         
