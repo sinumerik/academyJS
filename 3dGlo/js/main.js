@@ -52,6 +52,6 @@ window.addEventListener('DOMContentLoaded', function() {
         updateClock();
     };
 
-    timer('29 june 2020 12:45');
+    timer('29 july 2020 12:45');
 
 });
