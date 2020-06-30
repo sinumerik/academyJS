@@ -1,33 +1,31 @@
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', () => {
 
-    'use strict';
-
-    // получаем поля для таймера
-    const timerHours = document.getElementById('timer-hours'),
-        timerMinutes = document.getElementById('timer-minutes'),
-        timerSeconds = document.getElementById('timer-seconds');
-
-    let timer = function(endDate) {
+    // таймер
+    const timer = function(endDate) {
+        // получаем поля для таймера
+        const timerHours = document.getElementById('timer-hours'),
+            timerMinutes = document.getElementById('timer-minutes'),
+            timerSeconds = document.getElementById('timer-seconds');
 
         const getTimeRemaining = () => {
 
             const date = Date.now();
             const deadline = new Date(endDate).getTime();
 
-            let remaining = deadline - date,
-                d = Math.floor( remaining / 1000 / 60/ 60 / 24 ),
-                h = Math.floor( remaining / 1000 / 60/ 60 % 24),
-                m = Math.floor( remaining / 1000 /60 % 60),
-                s = Math.floor( remaining /1000 % 60 );
+            const remaining = deadline - date,
+                // d = Math.floor(remaining / 1000 / 60 / 60 / 24),
+                h = Math.floor(remaining / 1000 / 60 / 60 % 24),
+                m = Math.floor(remaining / 1000 / 60 % 60),
+                s = Math.floor(remaining / 1000 % 60);
 
-            return {h, m, s, remaining};
+            return { h, m, s, remaining };
         };
 
         const updateClock = () => {
-            let timer = getTimeRemaining();
+            const timer = getTimeRemaining();
 
-            for(let key in timer) {
-                timer[key] = timer[key] + '';
+            for (const key in timer) {
+                timer[key] += '';
 
                 if (timer[key].length === 1) {
                     timer[key] = '0' + timer[key];
@@ -38,7 +36,7 @@ window.addEventListener('DOMContentLoaded', function() {
             timerMinutes.innerText = timer.m;
             timerSeconds.innerText = timer.s;
 
-            let idInterval = setInterval(updateClock, 1000);
+            const idInterval = setInterval(updateClock, 1000);
 
             if (timer.remaining <= 0) {
                 clearInterval(idInterval);
@@ -54,4 +52,83 @@ window.addEventListener('DOMContentLoaded', function() {
 
     timer('29 july 2020 12:45');
 
+    // -----------------------------------------------------------------------------------
+
+    // меню
+    function menu() {
+
+        const menuBtn = document.querySelector('.menu'),
+            menu = document.querySelector('menu'),
+            closeBtn = document.querySelector('.close-btn'),
+            menuItems = menu.querySelectorAll('ul > li');
+
+        function toggleMenu() {
+            menu.classList.toggle('active-menu');
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        menuItems.forEach(item => {
+            item.addEventListener('click', toggleMenu);
+        });
+
+    }
+
+    menu();
+
+    // -----------------------------------------------------------------------------------
+
+    //popup
+    function popupAction() {
+        const popupBtn = document.querySelectorAll('.popup-btn'),
+            popupWindow = document.querySelector('.popup'),
+            popupCloseBtn = document.querySelector('.popup-close');
+
+        let id = 0;
+        let temp = 0;
+
+        popupBtn.forEach(item => {
+            item.addEventListener('click', () => {
+                popupWindow.style.display = 'block';
+
+                // popupWindow.animate([{
+                //     opacity: 0
+                // },
+                // {
+                //     opacity: 1
+                // }]
+                // , 300);
+                show();
+            });
+        });
+
+        function show() {
+            temp += 1 / 50;
+            id = requestAnimationFrame(show);
+
+            popupWindow.style.opacity =  temp;
+
+            if (id > 49) {
+                // popupWindow.style.display = 'none';
+                cancelAnimationFrame(id);
+            }
+        }
+
+        function close() {
+            id = requestAnimationFrame(close);
+
+            popupWindow.style.opacity -=  1 / 50;
+
+            if (id > 49) {
+                popupWindow.style.display = 'none';
+                cancelAnimationFrame(id);
+            }
+        }
+
+        popupCloseBtn.addEventListener('click', () => {
+            close();
+        });
+    }
+
+    popupAction();
 });
