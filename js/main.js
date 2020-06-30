@@ -84,49 +84,24 @@ window.addEventListener('DOMContentLoaded', () => {
             popupWindow = document.querySelector('.popup'),
             popupCloseBtn = document.querySelector('.popup-close');
 
-        let id = 0;
-        let temp = 0;
-
         popupBtn.forEach(item => {
             item.addEventListener('click', () => {
                 popupWindow.style.display = 'block';
 
-                // popupWindow.animate([{
-                //     opacity: 0
-                // },
-                // {
-                //     opacity: 1
-                // }]
-                // , 300);
-                show();
+                if (window.innerWidth > 768) {
+                    popupWindow.animate([{
+                        opacity: 0
+                    },
+                    {
+                        opacity: 1
+                    }]
+                    , 300);
+                }
             });
         });
 
-        function show() {
-            temp += 1 / 50;
-            id = requestAnimationFrame(show);
-
-            popupWindow.style.opacity =  temp;
-
-            if (id > 49) {
-                // popupWindow.style.display = 'none';
-                cancelAnimationFrame(id);
-            }
-        }
-
-        function close() {
-            id = requestAnimationFrame(close);
-
-            popupWindow.style.opacity -=  1 / 50;
-
-            if (id > 49) {
-                popupWindow.style.display = 'none';
-                cancelAnimationFrame(id);
-            }
-        }
-
         popupCloseBtn.addEventListener('click', () => {
-            close();
+            popupWindow.style.display = 'none';
         });
     }
 
