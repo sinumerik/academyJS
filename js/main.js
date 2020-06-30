@@ -60,7 +60,30 @@ window.addEventListener('DOMContentLoaded', () => {
         const menuBtn = document.querySelector('.menu'),
             menu = document.querySelector('menu'),
             closeBtn = document.querySelector('.close-btn'),
-            menuItems = menu.querySelectorAll('ul > li');
+            menuItems = menu.querySelectorAll('ul > li'),
+            link = menu.querySelectorAll('ul > li > a'),
+            serviceBlock = document.querySelector('a[href="#service-block"]');
+
+        link.forEach(item => {
+            item.addEventListener('click', e => {
+                e.preventDefault();
+                const temp = item.getAttribute('href').slice(1);
+
+                scroll(temp);
+            });
+        });
+
+        serviceBlock.addEventListener('click', function(e) {
+            e.preventDefault();
+            const temp = this.getAttribute('href').slice(1);
+
+            scroll(temp);
+        });
+
+        function scroll(attr) {
+            const temp = document.getElementById(attr);
+            temp.scrollIntoView({ behavior: "smooth" });
+        }
 
         function toggleMenu() {
             menu.classList.toggle('active-menu');
@@ -106,4 +129,8 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     popupAction();
+
+
+
+
 });
