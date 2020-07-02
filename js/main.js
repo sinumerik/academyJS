@@ -167,5 +167,32 @@ window.addEventListener('DOMContentLoaded', () => {
 
     tabsChanger();
 
+    //slider
+    const slider = () => {
+
+        let slider = document.querySelector('.portfolio-content'),
+            slides = document.querySelectorAll('.portfolio-item'),
+            dots = document.querySelectorAll('.dot');
+
+            let currentSlide = 0;
+            const timer = 1000;
+            const autoPlaySlider = () => {
+
+            if (currentSlide === slides.length) {
+                currentSlide = 0;
+            } else {
+                slides.forEach(item => {
+                    item.classList.remove('portfolio-item-active');
+                });
+                slides[currentSlide].classList.add('portfolio-item-active');
+                currentSlide++;
+            }
+        };
+
+        setInterval(autoPlaySlider, timer);
+
+    };
+
+    slider();
 
 });
