@@ -290,4 +290,50 @@ window.addEventListener('DOMContentLoaded', () => {
 
     slider();
 
+    //calculator
+
+    const calculator = () => {
+        const calcItems = document.querySelectorAll('input.calc-item'),
+            regExp = /\D/g;
+
+        calcItems.forEach(item => {
+            item.addEventListener('input', event => {
+                const target = event.target;
+
+                if (target === item) {
+                    item.value = item.value.replace(regExp, '');
+                }
+            });
+        });
+    };
+
+    calculator();
+
+    //team
+    const team = () => {
+        const commandPhotos = document.querySelectorAll('.command__photo');
+
+        commandPhotos.forEach(item => {
+
+            const temp = item.getAttribute('src');
+
+            item.addEventListener('mouseover', event => {
+                const target = event.target;
+
+                if (target === item) {
+                    item.setAttribute('src', item.dataset.img);
+                }
+            });
+
+            item.addEventListener('mouseout', event => {
+                const target = event.target;
+
+                if (target === item) {
+                    item.setAttribute('src', temp);
+                }
+            });
+        });
+    };
+
+    team();
 });
