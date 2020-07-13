@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
 
     // таймер
+
     const timer = function(endDate) {
         // получаем поля для таймера
         const timerHours = document.getElementById('timer-hours'),
@@ -55,6 +56,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // -----------------------------------------------------------------------------------
 
     // меню
+
     function menu() {
 
         const menuBtn = document.querySelector('.menu'),
@@ -104,6 +106,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // -----------------------------------------------------------------------------------
 
     //popup
+
     function popupAction() {
         const popupBtn = document.querySelectorAll('.popup-btn'),
             popupWindow = document.querySelector('.popup');
@@ -145,6 +148,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // -----------------------------------------------------------------------------------
 
     // tabs
+
     function tabsChanger() {
         const serviceHeader = document.querySelector('.service-header'),
             tabs = serviceHeader.querySelectorAll('.service-header-tab'),
@@ -167,7 +171,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     tabsChanger();
 
+    // -----------------------------------------------------------------------------------
+
     //slider
+
     const slider = () => {
 
         const slider = document.querySelector('.portfolio-content'),
@@ -290,6 +297,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     slider();
 
+    // -----------------------------------------------------------------------------------
+
     //calculator
 
     const calculator = (price = 100) => {
@@ -314,6 +323,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const numberAnimate = (total = 5) => {
             for (let i = 1; i <= total; i++) {
+
+                // если сумма больше 1000, пропускаем анимацию и выводим сразу значение
                 if (total > 1000) {
                     totalValue.textContent = total;
                     break;
@@ -379,7 +390,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     calculator(100);
 
+    // -----------------------------------------------------------------------------------
+
     //team
+
     const team = () => {
         const commandPhotos = document.querySelectorAll('.command__photo');
 
@@ -406,4 +420,100 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     team();
+
+    // -----------------------------------------------------------------------------------
+
+    // send ajax-form
+
+    const sendForm = () => {
+
+        const successMessage = 'Спасибо, мы скоро с Вами свяжемся!',
+            errorMessage = 'Что-то пошло не так...',
+            pendingMessage = 'Загрузка...';
+
+        const messageDiv = document.createElement('div');
+
+        messageDiv.style.cssText = `padding: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            display: inline-block;
+            margin-top: 15px;
+            margin-bottom: 15px`;
+
+        const heroForm = document.getElementById('form1'),
+            modalForm = document.getElementById('form3'),
+            footerForm = document.getElementById('form2');
+
+        const postData = (body, successCallback, errorCallback) => {
+            const request = new XMLHttpRequest();
+
+            request.addEventListener('readystatechange', () => {
+
+                if (request.readyState !== 4) {
+                    return;
+                }
+
+                if (request.status === 200) {
+                    successCallback();
+                } else {
+                    errorCallback();
+                }
+            });
+
+            request.open('POST', './server.php');
+
+            request.setRequestHeader('Content-Type', 'application/json');
+
+            request.send(JSON.stringify(body));
+        };
+
+        heroForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            heroForm.appendChild(messageDiv);
+
+            messageDiv.textContent = pendingMessage;
+
+            const formData = new FormData(heroForm);
+
+            const body = {};
+
+            formData.forEach((item, i) => {
+                body[i] = item;
+            });
+
+            postData(body, () => {
+                messageDiv.textContent = successMessage;
+            }, () => {
+                messageDiv.textContent = errorMessage;
+            });
+        });
+
+        console.log(modalForm)
+
+        modalForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            modalForm.appendChild(messageDiv);
+
+            messageDiv.textContent = pendingMessage;
+
+            const formData = new FormData(modalForm);
+
+            const body = {};
+
+            formData.forEach((item, i) => {
+                body[i] = item;
+            });
+
+            postData(body, () => {
+                messageDiv.textContent = successMessage;
+            }, () => {
+                messageDiv.textContent = errorMessage;
+            });
+        });
+    };
+
+    sendForm();
 });
