@@ -134,7 +134,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 popupWindow.style.display = 'none';
             } else {
                 target = target.closest('.popup-content');
-                console.log(target);
 
                 if (!target) {
                     popupWindow.style.display = 'none';
@@ -468,51 +467,65 @@ window.addEventListener('DOMContentLoaded', () => {
             request.send(JSON.stringify(body));
         };
 
-        heroForm.addEventListener('submit', event => {
-            event.preventDefault();
+        const formListener = form => {
 
-            heroForm.appendChild(messageDiv);
+            const regDigit = /^\+?\d+$/,
+                regAlphabet = /[а-яА-ЯёЁ\s]+/g;
 
-            messageDiv.textContent = pendingMessage;
+            for (const key of form.elements) {
+                if (key.type === 'tel') {
+                    key.addEventListener('input', event => {
 
-            const formData = new FormData(heroForm);
+                        if (regDigit.test(event.target.value)) {
+                            event.target.style.border = '1px solid green';
+                        } else {
+                            event.target.style.border = '1px solid red';
+                        }
+                    });
+                }
 
-            const body = {};
+                if (key.type === 'text') {
+                    key.addEventListener('input', event => {
 
-            formData.forEach((item, i) => {
-                body[i] = item;
+                        if (regAlphabet.test(event.target.value)) {
+                            event.target.style.border = '1px solid green';
+                        } else {
+                            event.target.style.border = '1px solid red';
+                            event.target.value = [...event.target.value.matchAll(regAlphabet)].join('');
+                        }
+                    });
+                }
+            }
+
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+
+                form.appendChild(messageDiv);
+
+                messageDiv.textContent = pendingMessage;
+
+                const formData = new FormData(form);
+
+                const body = {};
+
+                formData.forEach((item, i) => {
+                    body[i] = item;
+                });
+
+                postData(body, () => {
+                    messageDiv.textContent = successMessage;
+                    for (const key in body) {
+                        form.elements[key].value = '';
+                    }
+                }, () => {
+                    messageDiv.textContent = errorMessage;
+                });
             });
+        };
 
-            postData(body, () => {
-                messageDiv.textContent = successMessage;
-            }, () => {
-                messageDiv.textContent = errorMessage;
-            });
-        });
-
-        console.log(modalForm)
-
-        modalForm.addEventListener('submit', event => {
-            event.preventDefault();
-
-            modalForm.appendChild(messageDiv);
-
-            messageDiv.textContent = pendingMessage;
-
-            const formData = new FormData(modalForm);
-
-            const body = {};
-
-            formData.forEach((item, i) => {
-                body[i] = item;
-            });
-
-            postData(body, () => {
-                messageDiv.textContent = successMessage;
-            }, () => {
-                messageDiv.textContent = errorMessage;
-            });
-        });
+        formListener(modalForm);
+        formListener(heroForm);
+        formListener(footerForm);
     };
 
     sendForm();
