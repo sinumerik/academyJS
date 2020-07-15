@@ -531,6 +531,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     messageDiv.textContent = successMessage;
                     for (const key in body) {
                         form.elements[key].value = '';
+                        form.elements[key].style.border = '1px solid transparent';
                     }
                 }, () => {
                     messageDiv.textContent = errorMessage;
