@@ -473,13 +473,28 @@ window.addEventListener('DOMContentLoaded', () => {
                 regAlphabet = /[а-яА-ЯёЁ\s]+/g;
 
             for (const key of form.elements) {
+
+                if (key.type === 'submit') {
+                    key.setAttribute('disabled', 'disabled');
+                }
+
                 if (key.type === 'tel') {
                     key.addEventListener('input', event => {
 
                         if (regDigit.test(event.target.value)) {
                             event.target.style.border = '1px solid green';
+                            for (const key of form.elements) {
+                                if (key.type === 'submit') {
+                                    key.removeAttribute('disabled');
+                                }
+                            }
                         } else {
                             event.target.style.border = '1px solid red';
+                            for (const key of form.elements) {
+                                if (key.type === 'submit') {
+                                    key.setAttribute('disabled', 'disabled');
+                                }
+                            }
                         }
                     });
                 }
