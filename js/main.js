@@ -444,27 +444,26 @@ window.addEventListener('DOMContentLoaded', () => {
             modalForm = document.getElementById('form3'),
             footerForm = document.getElementById('form2');
 
-        const postData = (body, successCallback, errorCallback) => {
+        const postData = body => {
             const request = new XMLHttpRequest();
+            const promise = new Promise((resolve, reject) => {
+                request.addEventListener('readystatechange', () => {
 
-            request.addEventListener('readystatechange', () => {
-
-                if (request.readyState !== 4) {
-                    return;
-                }
-
-                if (request.status === 200) {
-                    successCallback();
-                } else {
-                    errorCallback();
-                }
+                    if (request.readyState !== 4) {
+                        return;
+                    }
+                    if (request.status === 200) {
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                });
+                request.open('POST', './server.php');
+                request.setRequestHeader('Content-Type', 'application/json');
+                request.send(JSON.stringify(body));
             });
 
-            request.open('POST', './server.php');
-
-            request.setRequestHeader('Content-Type', 'application/json');
-
-            request.send(JSON.stringify(body));
+            return promise;
         };
 
         const formListener = form => {
@@ -527,13 +526,15 @@ window.addEventListener('DOMContentLoaded', () => {
                     body[i] = item;
                 });
 
-                postData(body, () => {
+                postData(body)
+                .then(() => {
                     messageDiv.textContent = successMessage;
                     for (const key in body) {
                         form.elements[key].value = '';
                         form.elements[key].style.border = '1px solid transparent';
                     }
-                }, () => {
+                })
+                .catch(() => {
                     messageDiv.textContent = errorMessage;
                 });
             });
