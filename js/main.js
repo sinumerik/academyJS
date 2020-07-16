@@ -444,28 +444,6 @@ window.addEventListener('DOMContentLoaded', () => {
             modalForm = document.getElementById('form3'),
             footerForm = document.getElementById('form2');
 
-        const postData = body => {
-            const request = new XMLHttpRequest();
-            const promise = new Promise((resolve, reject) => {
-                request.addEventListener('readystatechange', () => {
-
-                    if (request.readyState !== 4) {
-                        return;
-                    }
-                    if (request.status === 200) {
-                        resolve();
-                    } else {
-                        reject();
-                    }
-                });
-                request.open('POST', './server.php');
-                request.setRequestHeader('Content-Type', 'application/json');
-                request.send(JSON.stringify(body));
-            });
-
-            return promise;
-        };
-
         const formListener = form => {
 
             const regDigit = /^\+?\d+$/,
@@ -511,6 +489,17 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            const postData = body => {
+
+                return fetch(('./server.php'), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+            };
+
             form.addEventListener('submit', event => {
                 event.preventDefault();
 
@@ -527,16 +516,22 @@ window.addEventListener('DOMContentLoaded', () => {
                 });
 
                 postData(body)
-                .then(() => {
-                    messageDiv.textContent = successMessage;
-                    for (const key in body) {
-                        form.elements[key].value = '';
-                        form.elements[key].style.border = '1px solid transparent';
-                    }
-                })
-                .catch(() => {
-                    messageDiv.textContent = errorMessage;
-                });
+                    .then(response => {
+
+                        if (response.status !== 200) {
+                            throw new Error('status network not 200');
+                        }
+
+                        messageDiv.textContent = successMessage;
+                        for (const key in body) {
+                            form.elements[key].value = '';
+                            form.elements[key].style.border = '1px solid transparent';
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        messageDiv.textContent = errorMessage;
+                    });
             });
         };
 
