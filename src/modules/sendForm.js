@@ -98,9 +98,11 @@ const sendForm = () => {
                         form.elements[key].value = '';
                         form.elements[key].style.border = '1px solid transparent';
                     }
+                    setTimeout(() => {
+                        messageDiv.remove();
+                    }, 5000);
                 })
-                .catch(error => {
-                    console.log(error);
+                .catch(() => {
                     messageDiv.textContent = errorMessage;
                 });
         });
